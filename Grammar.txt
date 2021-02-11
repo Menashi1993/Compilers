@@ -1,0 +1,116 @@
+
+//Start symbol,Variable and Function Declarations
+
+<myC-Program> ::=  <declarationList> 
+<declarationList> ::= <declarationList> <declaration> | <declaration>
+<declaration>  ::= <varDeclaration> | <funDeclaration> 
+
+//Variable Definition and Declaration
+
+<varDeclaration> ::= <typeName> <varDeclaratorList>;
+<typeName> ::= boolean| int| char| float| string 
+<varDeclaratorList> ::=  <declarator> | <declarator> , <varDeclaratorList> 
+<declarator>::= <identifier> | <assignExpr>
+
+//Floating Point number and Primary Expressions
+
+<identifier> ::= <letter> | <letter>[<num>| <letter>]+
+<letter> ::= [A-Za-z_][A-Za-z_0-9]*
+<numbers> ::= [+-]?[0-9]+(\.[0-9]*)?([eE][+-]?[0-9]+)? 
+<num> ::= [0-9]+
+<primaryExpr> ::= <strLiteral> |<identifier> |  <numbers> | TRUE | FALSE
+
+//Assignment Expression and Array Definition,Declaration
+
+<assignExpr> ::= <identifier> <assignmentOperator> <assignStmt>| <expr>
+<assignStmt> ::= <assignExpr> |  <arrayDecl>
+<arrayDecl> ::= <arrayInitializer> | <arrayInitializer> , <arrayDecl> | {<arrayDecl>}
+<arrayInitializer> ::= <primaryExpr> | <primaryExpr> , <arrayInitializer> | {<arrayInitializer>}
+
+//Boolean and String Expressions
+
+<expr> ::= <boolExpr> | <stringExpr> 
+<boolExpr> ::= <boolExpr> ‘||’ <boolAnd> | <boolAnd>
+<boolAnd> ::= <boolAnd>  ‘&&’ <unaryRelExpr> | <unaryRelExpr>
+<unaryRelExpr> ::= ‘!’<unaryRelExpr>  | <relExpr> 
+
+//Relational and Arithmetic Expressions
+
+<relExpr> ::=  <relExpr> <relop> <arithmExpr> | <arithmExpr> 
+<arithmExpr> ::=  <arithmExpr> <addop> <term>| <term> 
+<term> ::= <term> <mulop> <factor>  | <factor>
+<factor> ::= (<expr>) | <preFix> | <funcCall>
+<preFix> ::= ++<preFix> | --<preFix> | <postfixExp>
+<postfixExp> ::= <postfixExp>++ | <postfixExp>-- | <primaryExpr>
+
+//String Expressions
+
+<stringExpr> ::= <stringExpr>  <strOp> <strLiteral> | <stringExpr><eqlOp><strLiteral> | <strLiteral>                
+<strLiteral> ::=”<identifier>” | <identifier> | <identifier><ws>
+
+//Delimiters and Operators 
+
+<delim> ::= [ \t\n]
+<ws> ::= {<delim>}+
+
+<addop> ::= ‘+’ | ‘-’
+<mulop> ::= ‘*’  | ‘/’ |  ‘%’
+<relOp> = <eqlOp> | <compOp>
+<eqlop> ::= ‘==’ | ‘!=’
+<comprOp> =  ‘>’ | ‘<’ |  ‘>=’ | ‘<=’
+<strOp> ::= ‘+’
+
+<assignmentOperator> ::=  ‘=’ | ‘+=’ | ‘-=’ | ‘*=’ | ‘/=’ | ‘%=’ | ‘<<=’ | ‘>>=’ | ‘&=’ | ‘^=’ |’|=’
+                  
+//Statement Definition
+
+<statementDefine> ::= <assignExpr> ; | <condStmt> | <loopStmt>| <returnStmt> | <breakStmt> | <continueStmt> | <skipStmt> |  <compoundStmt> | <printStmt>
+
+//Local variable declaration and Statement Definition 
+
+<compoundStmt> ::= <localDeclarations> <statementList> 
+<localDeclarations> ::= <localDeclarations> <scopedVarDeclaration> | ɛ
+<statementList> ::= <statementList> <statementDefine> | ɛ
+<scopedVarDeclaration> ::= static <varDeclaration>  | <varDeclaration> 
+
+//Conditional Statement
+
+<condStmt> ::= if <expr> then <matchedStmt> else { <statementDefine>}| if <expr> then { <statementDefine> }
+<matchedStmt> ::= <matchedIf> | { <statementDefine>} 
+<matchedIf> ::= if <expr> then <matchedStmt> else <matchedStmt>
+
+//Loop Statement
+
+<loopStmt> ::= while (<expr>) { <statementDefine> } 
+
+//Other statements
+
+<returnStmt> ::= return <expr> ;
+<breakStmt> ::= break ;
+<continueStmt> ::= continue ;
+<skipStmt> ::= skip ;
+<printStmt> ::= print (<expr>) ;
+
+//Function Declaration 
+
+<funDeclaration> ::=<typeName> <identifier>( <funcParams> ) ; | <identifier>(<funcParams>); | <funDefinition> 
+
+//Function Invocation
+
+<funcCall> ::= <identifier>( <funcArgs> ) ;
+<funcArgs> ::= <argList> | ɛ
+<argList> ::= <argList> , <expr> | <expr>
+
+//Function Definition
+
+<funDefinition> ::= <typeName> <identifier>(<funcParams>)<block>|
+<identifier> (<funcParams>) <block>
+<block> ::= { <statementDefine> }
+<funcParams> ::= <paramList> |  ɛ
+<paramList> ::=  <paramList> , <paramTypeList> | <paramTypeList>
+<paramTypeList> ::= <typeName> <identifier>
+
+
+
+
+
